@@ -345,7 +345,11 @@ static int cedrus264_encode(AVCodecContext *avctx, AVPacket *pkt,
 	}else *got_packet = 0;
 
 	c4->frame_num++;
-
+	
+	//Periodic PPS in slice header for streaming every 120 frames
+	if (c4->frame_num >= 120)
+		c4->frame_num = 0;
+	
 	return 0;
 }
 
